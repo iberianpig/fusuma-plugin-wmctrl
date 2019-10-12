@@ -4,16 +4,16 @@ Window Manager plugin for [Fusuma](https://github.com/iberianpig/fusuma)
 
 ## Installation
 
-Run following commands in your terminal
+Run the following code in your terminal.
 
 ### Install wmctrl
-
-for using wmctrl in this plugin
 
 ```
 $ sudo apt install wmctrl
 ```
 ### Install fusuma-plugin-wmctrl
+
+This plugin requires [Fusuma](https://github.com/iberianpig/fusuma#update) version 1.0 or later.
 
 ```sh
 $ gem install fusuma-plugin-wmctrl
@@ -21,14 +21,17 @@ $ gem install fusuma-plugin-wmctrl
 
 ## Properties
 
-Add `workspace:` property in `~/.config/fusuma/config.yml`
+Add `workspace:` property in `~/.config/fusuma/config.yml`.
 
-* Currently, following value are available for `workspace`
+Currently, values following are available for `workspace`.
   * `prev`
   * `next`
 
 
 ## Example
+
+Set `workspace:` property and values in `~/.config/fusuma/config.yml`.
+
 ```yaml
 swipe:
   4:
