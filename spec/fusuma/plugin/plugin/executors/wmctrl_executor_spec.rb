@@ -17,6 +17,11 @@ module Fusuma
           record = Events::Records::IndexRecord.new(index: index)
           @event = Events::Event.new(tag: 'dummy_detector', record: record)
           @executor = WmctrlExecutor.new
+
+          @default_workspace_num = 1
+          allow(WmctrlExecutor::Workspace)
+            .to receive(:current_workspace_num)
+            .and_return(@default_workspace_num)
         end
 
         around do |example|
@@ -60,13 +65,6 @@ module Fusuma
         end
 
         describe '#search_command' do
-          before do
-            @default_workspace_num = 1
-            allow(WmctrlExecutor::Workspace)
-              .to receive(:current_workspace_num)
-              .and_return(@default_workspace_num)
-          end
-
           context "when workspace: 'prev'" do
             around do |example|
               ConfigHelper.load_config_yml = <<~CONFIG
