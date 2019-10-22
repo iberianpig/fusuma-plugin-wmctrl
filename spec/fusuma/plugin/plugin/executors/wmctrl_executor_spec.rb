@@ -61,10 +61,10 @@ module Fusuma
 
         describe '#search_command' do
           before do
-            @default_workspace = 1
+            @default_workspace_num = 1
             allow(WmctrlExecutor::Workspace)
-              .to receive(:current_workspace)
-              .and_return(@default_workspace)
+              .to receive(:current_workspace_num)
+              .and_return(@default_workspace_num)
           end
 
           context "when workspace: 'prev'" do
@@ -83,7 +83,7 @@ module Fusuma
 
             it 'should execute wmctrl command' do
               expect(@executor.search_command(@event))
-                .to match(/wmctrl -s #{@default_workspace - 1}/)
+                .to match(/wmctrl -s #{@default_workspace_num - 1}/)
             end
           end
 
@@ -103,7 +103,7 @@ module Fusuma
 
             it 'should execute wmctrl command' do
               expect(@executor.search_command(@event))
-                .to match(/wmctrl -s #{@default_workspace + 1}/)
+                .to match(/wmctrl -s #{@default_workspace_num + 1}/)
             end
           end
         end

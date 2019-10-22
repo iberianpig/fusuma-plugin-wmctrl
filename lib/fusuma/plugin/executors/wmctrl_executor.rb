@@ -11,6 +11,7 @@ module Fusuma
         def execute(event)
           return if search_command(event).nil?
 
+          MultiLogger.info(wmctrl: search_command(event))
           pid = fork do
             Process.daemon(true)
             exec(search_command(event))
