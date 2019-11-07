@@ -22,11 +22,21 @@ $ gem install fusuma-plugin-wmctrl
 
 ## Properties
 
+### `workspace:` property
 Add `workspace:` property in `~/.config/fusuma/config.yml`.
 
-Currently, values following are available for `workspace`.
-  * `prev`
-  * `next`
+Values following are available for `workspace`.
+
+  * `prev` is value to switch current workspace to previous workspace.
+  * `next` is value to switch current workspace to next workspace.
+
+### `window:` property for moving active window
+Add `window:` property in `~/.config/fusuma/config.yml`.
+
+Values following are available for `window`.
+
+  * `prev` is value to move active window to previous workspace.
+  * `next` is value to move active window to next workspace.
 
 
 ## Example

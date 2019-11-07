@@ -104,6 +104,50 @@ module Fusuma
                 .to match(/wmctrl -s #{@default_workspace_num + 1}/)
             end
           end
+
+          context "when window: 'prev'" do
+            around do |example|
+              ConfigHelper.load_config_yml = <<~CONFIG
+                dummy:
+                  1:
+                    direction:
+                      window: 'prev'
+              CONFIG
+
+              example.run
+
+              Config.custom_path = nil
+            end
+
+            it 'should execute wmctrl command' do
+              expect(@executor.search_command(@event))
+                .to match(/wmctrl -r :ACTIVE: -t #{@default_workspace_num - 1}/)
+              expect(@executor.search_command(@event))
+                .to match(/wmctrl -s #{@default_workspace_num - 1}/)
+            end
+          end
+
+          context "when window: 'next'" do
+            around do |example|
+              ConfigHelper.load_config_yml = <<~CONFIG
+                dummy:
+                  1:
+                    direction:
+                      window: 'next'
+              CONFIG
+
+              example.run
+
+              Config.custom_path = nil
+            end
+
+            it 'should execute wmctrl command' do
+              expect(@executor.search_command(@event))
+                .to match(/wmctrl -r :ACTIVE: -t #{@default_workspace_num + 1}/)
+              expect(@executor.search_command(@event))
+                .to match(/wmctrl -s #{@default_workspace_num + 1}/)
+            end
+          end
         end
       end
     end
