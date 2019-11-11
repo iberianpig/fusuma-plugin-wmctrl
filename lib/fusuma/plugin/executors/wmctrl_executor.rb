@@ -45,7 +45,7 @@ module Fusuma
           index = Config::Index.new([*event.record.index.keys, :workspace])
 
           direction = Config.search(index)
-          return if direction.nil?
+          return unless direction.is_a?(String)
 
           Workspace.move_command(direction: direction)
         end
@@ -57,7 +57,7 @@ module Fusuma
           index = Config::Index.new([*event.record.index.keys, :window])
 
           direction = Config.search(index)
-          return if direction.nil?
+          return unless direction.is_a?(String)
 
           Window.move_command(direction: direction)
         end
@@ -79,8 +79,7 @@ module Fusuma
                               when 'prev'
                                 current_workspace_num - 1
                               else
-                                warn "#{direction} is invalid key"
-                                exit 1
+                                raise "#{direction} is invalid key"
                               end
               "wmctrl -s #{workspace_num}"
             end
@@ -97,8 +96,7 @@ module Fusuma
                               when 'prev'
                                 Workspace.current_workspace_num - 1
                               else
-                                warn "#{direction} is invalid key"
-                                exit 1
+                                raise "#{direction} is invalid key"
                               end
               "wmctrl -r :ACTIVE: -t #{workspace_num} ; wmctrl -s #{workspace_num}"
             end
