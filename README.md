@@ -3,6 +3,9 @@
 
 Window Manager plugin for [Fusuma](https://github.com/iberianpig/fusuma)
 
+* Move window or workspace instead of xdotool
+* Works on Wayland(Not depends on xdotool)
+
 ## Installation
 
 Run the following code in your terminal.
