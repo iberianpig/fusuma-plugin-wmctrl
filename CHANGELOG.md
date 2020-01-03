@@ -1,5 +1,13 @@
 # Change Log
 
+## [Unreleased](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/HEAD)
+
+[Full Changelog](https://github.com/iberianpig/fusuma-plugin-wmctrl/compare/v0.2.0...HEAD)
+
+**Implemented enhancements:**
+
+- Control active window \(Close / Minimize / Maximize\) [\#2](https://github.com/iberianpig/fusuma-plugin-wmctrl/issues/2)
+
 ## [v0.2.0](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/v0.2.0) (2019-11-07)
 [Full Changelog](https://github.com/iberianpig/fusuma-plugin-wmctrl/compare/v0.1.0...v0.2.0)
 
