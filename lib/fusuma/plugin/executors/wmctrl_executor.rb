@@ -56,10 +56,22 @@ module Fusuma
         def search_window_command(event)
           index = Config::Index.new([*event.record.index.keys, :window])
 
-          direction = Config.search(index)
-          return unless direction.is_a?(String)
-
-          Window.move_command(direction: direction)
+          case property = Config.search(index)
+          when 'prev', 'next'
+            Window.move_command(direction: property)
+          when 'fullscreen'
+            Window.fullscreen(method: 'toggle')
+          when 'maximized'
+            Window.maximized(method: 'toggle')
+          when 'close'
+            Window.close
+          when Hash
+            if property[:fullscreen]
+              Window.fullscreen(method: property[:fullscreen])
+            elsif property[:maximized]
+              Window.maximized(method: property[:maximized])
+            end
+          end
         end
 
         # Manage workspace
@@ -89,6 +101,20 @@ module Fusuma
         # Manage Window
         class Window
           class << self
+            # @param method [String] "toggle" or "add" or "remove"
+            def maximized(method:)
+              "wmctrl -r :ACTIVE: -b #{method},maximized_vert,maximized_horz"
+            end
+
+            def close
+              'wmctrl -c :ACTIVE:'
+            end
+
+            # @param method [String] "toggle" or "add" or "remove"
+            def fullscreen(method:)
+              "wmctrl -r :ACTIVE: -b #{method},fullscreen"
+            end
+
             def move_command(direction:)
               workspace_num = case direction
                               when 'next'

@@ -79,7 +79,7 @@ module Fusuma
               Config.custom_path = nil
             end
 
-            it 'should execute wmctrl command' do
+            it 'should return wmctrl command' do
               expect(@executor.search_command(@event))
                 .to match(/wmctrl -s #{@default_workspace_num - 1}/)
             end
@@ -99,7 +99,7 @@ module Fusuma
               Config.custom_path = nil
             end
 
-            it 'should execute wmctrl command' do
+            it 'should return wmctrl command' do
               expect(@executor.search_command(@event))
                 .to match(/wmctrl -s #{@default_workspace_num + 1}/)
             end
@@ -119,7 +119,7 @@ module Fusuma
               Config.custom_path = nil
             end
 
-            it 'should execute wmctrl command' do
+            it 'should return wmctrl command' do
               expect(@executor.search_command(@event))
                 .to match(/wmctrl -r :ACTIVE: -t #{@default_workspace_num - 1}/)
               expect(@executor.search_command(@event))
@@ -141,11 +141,200 @@ module Fusuma
               Config.custom_path = nil
             end
 
-            it 'should execute wmctrl command' do
+            it 'should return wmctrl command' do
               expect(@executor.search_command(@event))
                 .to match(/wmctrl -r :ACTIVE: -t #{@default_workspace_num + 1}/)
               expect(@executor.search_command(@event))
                 .to match(/wmctrl -s #{@default_workspace_num + 1}/)
+            end
+          end
+
+          context "when window: 'fullscreen'" do
+            around do |example|
+              ConfigHelper.load_config_yml = <<~CONFIG
+                dummy:
+                  1:
+                    direction:
+                      window: 'fullscreen'
+              CONFIG
+
+              example.run
+
+              Config.custom_path = nil
+            end
+
+            it 'should return wmctrl command' do
+              expect(@executor.search_command(@event))
+                .to match(/wmctrl -r :ACTIVE: -b toggle,fullscreen/)
+            end
+          end
+
+          context 'when window: [fullscreen: something]' do
+            context "when fullscreen: 'toggle'" do
+              around do |example|
+                ConfigHelper.load_config_yml = <<~CONFIG
+                  dummy:
+                    1:
+                      direction:
+                        window:
+                          fullscreen: 'toggle'
+                CONFIG
+
+                example.run
+
+                Config.custom_path = nil
+              end
+
+              it 'should return wmctrl command' do
+                expect(@executor.search_command(@event))
+                  .to match(/wmctrl -r :ACTIVE: -b toggle,fullscreen/)
+              end
+            end
+
+            context "when fullscreen: 'add'" do
+              around do |example|
+                ConfigHelper.load_config_yml = <<~CONFIG
+                  dummy:
+                    1:
+                      direction:
+                        window:
+                          fullscreen: 'add'
+                CONFIG
+
+                example.run
+
+                Config.custom_path = nil
+              end
+
+              it 'should return wmctrl command' do
+                expect(@executor.search_command(@event))
+                  .to match(/wmctrl -r :ACTIVE: -b add,fullscreen/)
+              end
+            end
+
+            context "when fullscreen: 'remove'" do
+              around do |example|
+                ConfigHelper.load_config_yml = <<~CONFIG
+                  dummy:
+                    1:
+                      direction:
+                        window:
+                          fullscreen: 'remove'
+                CONFIG
+
+                example.run
+
+                Config.custom_path = nil
+              end
+
+              it 'should return wmctrl command' do
+                expect(@executor.search_command(@event))
+                  .to match(/wmctrl -r :ACTIVE: -b remove,fullscreen/)
+              end
+            end
+          end
+
+          context "when window: 'maximized'" do
+            around do |example|
+              ConfigHelper.load_config_yml = <<~CONFIG
+                dummy:
+                  1:
+                    direction:
+                      window: 'maximized'
+              CONFIG
+
+              example.run
+
+              Config.custom_path = nil
+            end
+
+            it 'should return wmctrl command' do
+              expect(@executor.search_command(@event))
+                .to match(/wmctrl -r :ACTIVE: -b toggle,maximized/)
+            end
+          end
+
+          context 'when window: [maximized: something]' do
+            context "when maximized: 'toggle'" do
+              around do |example|
+                ConfigHelper.load_config_yml = <<~CONFIG
+                  dummy:
+                    1:
+                      direction:
+                        window:
+                          maximized: 'toggle'
+                CONFIG
+
+                example.run
+
+                Config.custom_path = nil
+              end
+
+              it 'should return wmctrl command' do
+                expect(@executor.search_command(@event))
+                  .to match(/wmctrl -r :ACTIVE: -b toggle,maximized/)
+              end
+            end
+
+            context "when maximized: 'add'" do
+              around do |example|
+                ConfigHelper.load_config_yml = <<~CONFIG
+                  dummy:
+                    1:
+                      direction:
+                        window:
+                          maximized: 'add'
+                CONFIG
+
+                example.run
+
+                Config.custom_path = nil
+              end
+
+              it 'should return wmctrl command' do
+                expect(@executor.search_command(@event))
+                  .to match(/wmctrl -r :ACTIVE: -b add,maximized/)
+              end
+            end
+
+            context "when maximized: 'remove'" do
+              around do |example|
+                ConfigHelper.load_config_yml = <<~CONFIG
+                  dummy:
+                    1:
+                      direction:
+                        window:
+                          maximized: 'remove'
+                CONFIG
+
+                example.run
+
+                Config.custom_path = nil
+              end
+
+              it 'should return wmctrl command' do
+                expect(@executor.search_command(@event))
+                  .to match(/wmctrl -r :ACTIVE: -b remove,maximized/)
+              end
+            end
+          end
+          context "when window: 'close'" do
+            around do |example|
+              ConfigHelper.load_config_yml = <<~CONFIG
+                dummy:
+                  1:
+                    direction:
+                      window: 'close'
+              CONFIG
+
+              example.run
+
+              Config.custom_path = nil
+            end
+
+            it 'should return wmctrl command' do
+              expect(@executor.search_command(@event))
+                .to match(/wmctrl -c :ACTIVE:/)
             end
           end
         end
