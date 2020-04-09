@@ -33,7 +33,7 @@ Values following are available for `workspace`.
   * `prev` is value to switch current workspace to previous workspace.
   * `next` is value to switch current workspace to next workspace.
 
-### `window:` property for moving active window
+### `window:` property
 Add `window:` property in `~/.config/fusuma/config.yml`.
 
 Values following are available for `window`.
