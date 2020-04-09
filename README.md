@@ -20,7 +20,7 @@ $ sudo apt install wmctrl
 This plugin requires [Fusuma](https://github.com/iberianpig/fusuma#update) version 1.0 or later.
 
 ```sh
-$ gem install fusuma-plugin-wmctrl
+$ sudo gem install fusuma-plugin-wmctrl
 ```
 
 ## Properties
