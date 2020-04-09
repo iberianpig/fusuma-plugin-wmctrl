@@ -40,6 +40,46 @@ Values following are available for `window`.
 
   * `prev` is value to move active window to previous workspace.
   * `next` is value to move active window to next workspace.
+  * `fullscreen` is value to toggle fullscreen
+    * `fullscreen: toggle` toggles the active window to fullscreen.
+      ```yml
+        window: fullscreen
+        # ↑ same ↓
+        window: 
+          fullscreen: toggle
+      ```
+
+    * `fullscreen: add` changes the active window to a fullscreen.
+      ```yml
+        window: 
+          fullscreen: add
+      ``` 
+
+    * `fullscreen: remove` restores the active window from fullscreen.
+      ```yml
+        window: 
+          fullscreen: remove
+      ```
+  * `maximized` is value to toggle maximized
+    * `maximized: toggle` toggles the active window to maximized.
+      ```yml
+        window: maximized
+        # ↑ same ↓
+        window: 
+          maximized: toggle
+      ```
+
+    * `maximized: add` changes the active window to a maximized.
+      ```yml
+        window: 
+          maximized: add
+      ``` 
+
+    * `maximized: remove` restores the active window from maximized.
+      ```yml
+        window: 
+          maximized: remove
+      ```
 
 
 ## Example
