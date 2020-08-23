@@ -25,16 +25,5 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.required_ruby_version = '>= 2.3' # https://packages.ubuntu.com/search?keywords=ruby&searchon=names&exact=1&suite=all&section=main
-  spec.add_dependency 'fusuma', '~> 1.3'
-
-  spec.add_development_dependency 'bundler'
-  spec.add_development_dependency 'github_changelog_generator', '~> 1.14'
-  spec.add_development_dependency 'pry-byebug', '~> 3.4'
-  spec.add_development_dependency 'pry-doc'
-  spec.add_development_dependency 'pry-inline'
-  spec.add_development_dependency 'rake', '~> 13.0'
-  spec.add_development_dependency 'reek'
-  spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rubocop'
-  spec.add_development_dependency 'yard'
+  spec.add_dependency 'fusuma', '~> 2.0'
 end
