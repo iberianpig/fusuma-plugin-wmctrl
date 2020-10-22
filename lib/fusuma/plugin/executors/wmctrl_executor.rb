@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'posix/spawn'
+
 module Fusuma
   module Plugin
     module Executors
@@ -12,11 +14,7 @@ module Fusuma
           return if search_command(event).nil?
 
           MultiLogger.info(wmctrl: search_command(event))
-          pid = fork do
-            Process.daemon(true)
-            exec(search_command(event))
-          end
-
+          pid = POSIX::Spawn.spawn(search_command(event))
           Process.detach(pid)
         end
 
