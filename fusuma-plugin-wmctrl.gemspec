@@ -25,5 +25,5 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.required_ruby_version = '>= 2.3' # https://packages.ubuntu.com/search?keywords=ruby&searchon=names&exact=1&suite=all&section=main
-  spec.add_dependency 'fusuma', '~> 2.0'
+  spec.add_dependency 'fusuma', '~> 2.0.0.pre'
 end
