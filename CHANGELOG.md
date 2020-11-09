@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/HEAD)
+## [v0.4.0.pre](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/v0.4.0.pre) (2020-11-09)
 
-[Full Changelog](https://github.com/iberianpig/fusuma-plugin-wmctrl/compare/v0.3.0...HEAD)
+[Full Changelog](https://github.com/iberianpig/fusuma-plugin-wmctrl/compare/v0.3.0...v0.4.0.pre)
 
 **Merged pull requests:**
 
