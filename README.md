@@ -10,12 +10,21 @@ Window Manager plugin for [Fusuma](https://github.com/iberianpig/fusuma)
 
 Run the following code in your terminal.
 
-### Install wmctrl
+### 1.Install wmctrl
+
+#### For Debian Based Distros (Ubuntu, Debian, Mint, Pop!_OS)
 
 ```
-$ sudo apt install wmctrl
+$ sudo apt install wmctrl -y
 ```
-### Install fusuma-plugin-wmctrl
+
+#### For Arch Based Distros (Manjaro, Arch)
+
+```
+sudo pacman -S wmctrl
+```
+
+### 2. Install fusuma-plugin-wmctrl
 
 This plugin requires [Fusuma](https://github.com/iberianpig/fusuma#update) version 1.0 or later.
 
