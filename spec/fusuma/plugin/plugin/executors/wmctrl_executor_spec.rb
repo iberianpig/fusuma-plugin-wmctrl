@@ -20,7 +20,7 @@ module Fusuma
 
           @default_workspace_num = 1
           allow(WmctrlExecutor::Workspace)
-            .to receive(:current_workspace_num)
+            .to receive(:workspace_values)
             .and_return(@default_workspace_num)
         end
 
@@ -38,14 +38,13 @@ module Fusuma
         end
 
         describe '#execute' do
-          it 'fork' do
-            allow(Process).to receive(:daemon).with(true)
-            allow(Process).to receive(:detach).with(anything)
-
-            expect(@executor).to receive(:fork).and_yield do |block_context|
-              allow(block_context).to receive(:search_command).with(@event)
-              expect(block_context).to receive(:exec).with(anything)
-            end
+          it 'detach' do
+            pid = rand(20)
+            allow(POSIX::Spawn)
+              .to receive(:spawn).with(@executor.search_command(@event))
+              .and_return pid
+          
+            expect(Process).to receive(:detach).with(pid)
 
             @executor.execute(@event)
           end
@@ -65,6 +64,7 @@ module Fusuma
         end
 
         describe '#search_command' do
+
           context "when workspace: 'prev'" do
             around do |example|
               ConfigHelper.load_config_yml = <<~CONFIG
@@ -336,6 +336,138 @@ module Fusuma
               expect(@executor.search_command(@event))
                 .to match(/wmctrl -c :ACTIVE:/)
             end
+          end
+
+          describe 'wrap_navigation: true' do
+
+            context "when workspace: 'prev' and current workspace 0" do
+              around do |example|
+                ConfigHelper.load_config_yml = <<~CONFIG
+                  dummy:
+                    1:
+                      direction:
+                        workspace: 'prev'
+                  plugin: 
+                    executors:
+                      wmctrl_executor:
+                        wrap-navigation: true
+                CONFIG
+  
+                example.run
+  
+                Config.custom_path = nil
+              end
+
+              it 'should return wmctrl command with an index last workspace' do
+                current_workspace = 0
+                total_workspaces = 3
+                
+                allow(WmctrlExecutor::Workspace)
+                  .to receive(:workspace_values)
+                  .and_return([current_workspace, total_workspaces])
+  
+                expect(@executor.search_command(@event))
+                  .to match(/wmctrl -s #{total_workspaces - 1}/)
+              end
+            end
+
+            context "when workspace: 'next' and current workspace = total - 1" do
+              around do |example|
+                ConfigHelper.load_config_yml = <<~CONFIG
+                  dummy:
+                    1:
+                      direction:
+                        workspace: 'next'
+                  plugin: 
+                    executors:
+                      wmctrl_executor:
+                        wrap-navigation: true
+                CONFIG
+  
+                example.run
+  
+                Config.custom_path = nil
+              end
+  
+              it 'should return wmctrl command with an index of first workspace' do
+                current_workspace = 3
+                total_workspaces = 4
+                
+                allow(WmctrlExecutor::Workspace)
+                  .to receive(:workspace_values)
+                  .and_return([current_workspace, total_workspaces])
+
+                expect(@executor.search_command(@event))
+                  .to match(/wmctrl -s 0/)
+              end
+            end
+            
+            context "when window: 'prev' and current workspace has index 0" do
+              around do |example|
+                ConfigHelper.load_config_yml = <<~CONFIG
+                  dummy:
+                    1:
+                      direction:
+                        window: 'prev'
+                  plugin: 
+                    executors:
+                      wmctrl_executor:
+                        wrap-navigation: true
+                CONFIG
+  
+                example.run
+  
+                Config.custom_path = nil
+              end
+  
+              it 'should return wmctrl command with index of last workspace' do
+                current_workspace = 0
+                total_workspaces = 5
+                
+                allow(WmctrlExecutor::Workspace)
+                  .to receive(:workspace_values)
+                  .and_return([current_workspace, total_workspaces])
+
+                expect(@executor.search_command(@event))
+                  .to match(/wmctrl -r :ACTIVE: -t #{total_workspaces - 1}/)
+                expect(@executor.search_command(@event))
+                  .to match(/wmctrl -s #{total_workspaces - 1}/)
+              end
+            end
+  
+            context "when window: 'next' and current workspace is last" do
+              around do |example|
+                ConfigHelper.load_config_yml = <<~CONFIG
+                  dummy:
+                    1:
+                      direction:
+                        window: 'next'
+                  plugin: 
+                    executors:
+                      wmctrl_executor:
+                        wrap-navigation: true
+                CONFIG
+  
+                example.run
+  
+                Config.custom_path = nil
+              end
+  
+              it 'should return wmctrl command with index of first workspace' do
+                current_workspace = 4
+                total_workspaces = 5
+                
+                allow(WmctrlExecutor::Workspace)
+                  .to receive(:workspace_values)
+                  .and_return([current_workspace, total_workspaces])
+
+                expect(@executor.search_command(@event))
+                  .to match(/wmctrl -r :ACTIVE: -t 0/)
+                expect(@executor.search_command(@event))
+                  .to match(/wmctrl -s 0/)
+              end
+            end
+
           end
         end
       end

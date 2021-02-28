@@ -109,6 +109,17 @@ swipe:
       workspace: 'prev'
 ```
 
+## Configuration
+
+The plugin allows to enable (disabled by default) circular navigation between workspaces. To enable it set the following in your config file `~/.config/fusuma/config.yml`.
+
+```yaml
+plugin: 
+  executors:
+    wmctrl_executor:
+      wrap-navigation: true
+```
+
 
 ## Contributing
 

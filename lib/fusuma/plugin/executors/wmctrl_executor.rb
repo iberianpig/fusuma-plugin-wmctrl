@@ -1,12 +1,25 @@
 # frozen_string_literal: true
 
 require 'posix/spawn'
+require 'singleton'
 
 module Fusuma
   module Plugin
     module Executors
       # Control Window or Workspaces by executing wctrl
       class WmctrlExecutor < Executor
+
+
+        def config_param_types
+          {
+            'wrap-navigation': [TrueClass, FalseClass],
+          }
+        end
+
+        def initialize
+          Workspace.configure(wrap_navigation:  config_params(:'wrap-navigation'))
+        end
+
         # execute wmctrl command
         # @param event [Event]
         # @return [nil]
@@ -74,24 +87,61 @@ module Fusuma
 
         # Manage workspace
         class Workspace
+          include Singleton
+
+          attr_accessor :wrap_navigation
+
           class << self
-            # get workspace number
+
+            # configure properties of the workspace switcher
+            # @return [NilClass]
+            def configure(wrap_navigation:)
+              instance.wrap_navigation = wrap_navigation
+            end
+
+            # get next workspace number
             # @return [Integer]
-            def current_workspace_num
-              text = `wmctrl -d`.split("\n").grep(/\*/).first
-              text.chars.first.to_i
+            def next_workspace_num(step:)
+              current_workspace_num, total_workspace_num = workspace_values
+
+              next_workspace_num = current_workspace_num + step
+
+              unless instance.wrap_navigation
+                return next_workspace_num
+              end
+
+              if next_workspace_num < 0
+                next_workspace_num = total_workspace_num - 1
+              elsif next_workspace_num >= total_workspace_num
+                next_workspace_num = 0
+              else
+                next_workspace_num
+              end
             end
 
             def move_command(direction:)
               workspace_num = case direction
                               when 'next'
-                                current_workspace_num + 1
+                                next_workspace_num(step: 1)
                               when 'prev'
-                                current_workspace_num - 1
+                                next_workspace_num(step: -1)
                               else
                                 raise "#{direction} is invalid key"
                               end
               "wmctrl -s #{workspace_num}"
+            end
+
+            private
+
+            # get current workspace and total workspace numbers
+            # @return [Integer, Integer]
+            def workspace_values
+              wmctrl_output = `wmctrl -d`.split("\n")
+
+              current_workspace_num = wmctrl_output.grep(/\*/).first.chars.first.to_i
+              total_workspace_num = wmctrl_output.length()
+
+              return current_workspace_num, total_workspace_num
             end
           end
         end
@@ -116,9 +166,9 @@ module Fusuma
             def move_command(direction:)
               workspace_num = case direction
                               when 'next'
-                                Workspace.current_workspace_num + 1
+                                Workspace.next_workspace_num(step: 1)
                               when 'prev'
-                                Workspace.current_workspace_num - 1
+                                Workspace.next_workspace_num(step: -1)
                               else
                                 raise "#{direction} is invalid key"
                               end
