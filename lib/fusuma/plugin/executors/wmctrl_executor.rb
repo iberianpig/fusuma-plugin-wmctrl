@@ -8,7 +8,11 @@ module Fusuma
     module Executors
       # Control Window or Workspaces by executing wctrl
       class WmctrlExecutor < Executor
-
+        # executor properties on config.yml
+        # @return [Array<Symbol>]
+        def execute_keys
+          %i[wmctrl workspace]
+        end
 
         def config_param_types
           {
