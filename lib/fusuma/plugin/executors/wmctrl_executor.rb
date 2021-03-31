@@ -12,7 +12,7 @@ module Fusuma
 
         def config_param_types
           {
-            'wrap-navigation': [TrueClass, FalseClass],
+            'wrap-navigation': [TrueClass, FalseClass]
           }
         end
 
@@ -106,11 +106,9 @@ module Fusuma
 
               next_workspace_num = current_workspace_num + step
 
-              unless instance.wrap_navigation
-                return next_workspace_num
-              end
+              return next_workspace_num unless instance.wrap_navigation
 
-              if next_workspace_num < 0
+              if next_workspace_num.negative?
                 next_workspace_num = total_workspace_num - 1
               elsif next_workspace_num >= total_workspace_num
                 next_workspace_num = 0
