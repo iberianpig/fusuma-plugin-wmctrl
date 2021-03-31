@@ -21,7 +21,7 @@ module Fusuma
         end
 
         def initialize
-          Workspace.configure(wrap_navigation:  config_params(:'wrap-navigation'))
+          Workspace.configure(wrap_navigation: config_params(:'wrap-navigation'))
         end
 
         # execute wmctrl command
@@ -96,7 +96,6 @@ module Fusuma
           attr_accessor :wrap_navigation
 
           class << self
-
             # configure properties of the workspace switcher
             # @return [NilClass]
             def configure(wrap_navigation:)
@@ -140,10 +139,15 @@ module Fusuma
             def workspace_values
               wmctrl_output = `wmctrl -d`.split("\n")
 
-              current_workspace_num = wmctrl_output.grep(/\*/).first.chars.first.to_i
-              total_workspace_num = wmctrl_output.length()
+              current_line = wmctrl_output.grep(/\*/).first
+              # NOTE: stderror when failed to get desktop
+              # `Cannot get current desktop properties. (_NET_CURRENT_DESKTOP or _WIN_WORKSPACE property)`
+              return [0, 1] if current_line.nil? # If not found ,return desktop id as 0 and the total number as 1
 
-              return current_workspace_num, total_workspace_num
+              current_workspace_num = current_line.chars.first.to_i
+              total_workspace_num = wmctrl_output.length
+
+              [current_workspace_num, total_workspace_num]
             end
           end
         end
