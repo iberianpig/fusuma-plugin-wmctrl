@@ -21,6 +21,7 @@ module Fusuma
         end
 
         def initialize
+          super()
           Workspace.configure(wrap_navigation: config_params(:'wrap-navigation'))
         end
 
@@ -142,7 +143,7 @@ module Fusuma
               current_line = wmctrl_output.grep(/\*/).first
               # NOTE: stderror when failed to get desktop
               # `Cannot get current desktop properties. (_NET_CURRENT_DESKTOP or _WIN_WORKSPACE property)`
-              return [0, 1] if current_line.nil? # If not found ,return desktop id as 0 and the total number as 1
+              return [0, 1] if current_line.nil?
 
               current_workspace_num = current_line.chars.first.to_i
               total_workspace_num = wmctrl_output.length
