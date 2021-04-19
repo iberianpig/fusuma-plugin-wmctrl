@@ -11,7 +11,7 @@ module Fusuma
         # executor properties on config.yml
         # @return [Array<Symbol>]
         def execute_keys
-          %i[wmctrl workspace]
+          %i[workspace window]
         end
 
         def config_param_types
