@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'posix/spawn'
 require 'singleton'
 
 module Fusuma
@@ -32,7 +31,7 @@ module Fusuma
           return if search_command(event).nil?
 
           MultiLogger.info(wmctrl: search_command(event))
-          pid = POSIX::Spawn.spawn(search_command(event))
+          pid = Process.spawn(search_command(event))
           Process.detach(pid)
         end
 

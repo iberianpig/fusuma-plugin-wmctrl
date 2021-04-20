@@ -40,7 +40,7 @@ module Fusuma
         describe '#execute' do
           it 'detach' do
             pid = rand(20)
-            allow(POSIX::Spawn)
+            allow(Process)
               .to receive(:spawn).with(@executor.search_command(@event))
                                  .and_return pid
 
