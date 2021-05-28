@@ -118,6 +118,7 @@ module Fusuma
               else
                 next_workspace_num
               end
+              next_workspace_num
             end
 
             def move_command(direction:)
@@ -141,7 +142,8 @@ module Fusuma
 
               current_line = wmctrl_output.grep(/\*/).first
               # NOTE: stderror when failed to get desktop
-              # `Cannot get current desktop properties. (_NET_CURRENT_DESKTOP or _WIN_WORKSPACE property)`
+              # `Cannot get current desktop properties. \
+              # (_NET_CURRENT_DESKTOP or _WIN_WORKSPACE property)`
               return [0, 1] if current_line.nil?
 
               current_workspace_num = current_line.chars.first.to_i
