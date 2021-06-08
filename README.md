@@ -29,7 +29,7 @@ sudo pacman -S wmctrl
 This plugin requires [Fusuma](https://github.com/iberianpig/fusuma#update) version 1.0 or later.
 
 
-**Note For Arch Based Distros:** By default in Arch Linux, when running ```gem```, gems are installed per-user (into ```~/.gem/ruby/```), instead of system-wide (into ```/usr/lib/ruby/gems/```). This is considered the best way to manage gems on Arch, because otherwise they might interfere with gems installed by Pacman. (From Arch Wiki)
+**Note For Arch Based Distros:** By default in Arch Linux, when running `gem`, gems are installed per-user (into `~/.gem/ruby/`), instead of system-wide (into `/usr/lib/ruby/gems/`). This is considered the best way to manage gems on Arch, because otherwise they might interfere with gems installed by Pacman. (From Arch Wiki)
 
 To install gems system-wide, see any of the methods listed on [Arch Wiki](https://wiki.archlinux.org/index.php/ruby#Installing_gems_system-wide)
 
@@ -46,6 +46,7 @@ Values following are available for `workspace`.
 
   * `prev` is value to switch current workspace to previous workspace.
   * `next` is value to switch current workspace to next workspace.
+  * [**[For grid-style workspaces only](#support-grid-style-workspace)**] `up` / `down` / `left` / `right` navigate to the workspace in the direction.
 
 ### `window:` property
 Add `window:` property in `~/.config/fusuma/config.yml`.
@@ -54,6 +55,7 @@ Values following are available for `window`.
 
   * `prev` is value to move active window to previous workspace.
   * `next` is value to move active window to next workspace.
+  * [**[For grid-style workspaces only](#support-grid-style-workspace)**] `up` / `down` / `left` / `right` move window to the workspace in the direction.
   * `fullscreen` is value to toggle fullscreen
     * `fullscreen: toggle` toggles the active window to fullscreen.
       ```yml
@@ -111,6 +113,8 @@ swipe:
 
 ## Configuration
 
+### Wrap navigation
+
 The plugin allows to enable (disabled by default) circular navigation between workspaces. To enable it set the following in your config file `~/.config/fusuma/config.yml`.
 
 ```yaml
@@ -119,6 +123,56 @@ plugin:
     wmctrl_executor:
       wrap-navigation: true
 ```
+
+### Support grid-style workspace
+
+For grid-style workspace users, Fusuma has an option to move workspace up, down, left or right.
+To enable this option, set `matrix-col-size`.
+
+For example, for a 3x2 workspace, set `matrix-col-size: 3` to wmctrl_executor option.
+```yaml
+plugin:
+  executors:
+    wmctrl_executor:
+      matrix-col-size: 3
+```
+
+With this setting, the `up`/`down`/`left`/`right` properties will be enabled on `workspace:` and `window:`.
+
+#### Example
+
+```yaml
+swipe:
+  4:
+    up:
+      workspace: down
+      keypress:
+        LEFTSHIFT:
+          window: down
+    down:
+      workspace: up
+      keypress:
+        LEFTSHIFT:
+          window: up
+    left:
+      workspace: right
+      keypress:
+        LEFTSHIFT:
+          window: right
+    right:
+      workspace: left
+      keypress:
+        LEFTSHIFT:
+          window: left
+
+plugin:
+  executors:
+    wmctrl_executor:
+      matrix-col-size: 3
+```
+
+NOTE: `keypress:` property is enabled with fusuma-plugin-keypress
+https://github.com/iberianpig/fusuma-plugin-keypress
 
 
 ## Contributing
