@@ -1,5 +1,37 @@
 # Changelog
 
+## [v1.0.0](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/v1.0.0) (2021-06-08)
+
+[Full Changelog](https://github.com/iberianpig/fusuma-plugin-wmctrl/compare/v0.4.3...v1.0.0)
+
+**Closed issues:**
+
+- workspace: up/down [\#5](https://github.com/iberianpig/fusuma-plugin-wmctrl/issues/5)
+
+**Merged pull requests:**
+
+- Support grid-style workspace [\#10](https://github.com/iberianpig/fusuma-plugin-wmctrl/pull/10) ([iberianpig](https://github.com/iberianpig))
+
+## [v0.4.3](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/v0.4.3) (2021-04-20)
+
+[Full Changelog](https://github.com/iberianpig/fusuma-plugin-wmctrl/compare/v0.4.2...v0.4.3)
+
+**Merged pull requests:**
+
+- Fix/8/add window execute keys [\#9](https://github.com/iberianpig/fusuma-plugin-wmctrl/pull/9) ([iberianpig](https://github.com/iberianpig))
+
+## [v0.4.2](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/v0.4.2) (2021-04-19)
+
+[Full Changelog](https://github.com/iberianpig/fusuma-plugin-wmctrl/compare/v0.4.1...v0.4.2)
+
+**Fixed bugs:**
+
+- "window" properties don't work [\#8](https://github.com/iberianpig/fusuma-plugin-wmctrl/issues/8)
+
+## [v0.4.1](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/v0.4.1) (2021-04-13)
+
+[Full Changelog](https://github.com/iberianpig/fusuma-plugin-wmctrl/compare/v0.4.0...v0.4.1)
+
 ## [v0.4.0](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/v0.4.0) (2021-04-12)
 
 [Full Changelog](https://github.com/iberianpig/fusuma-plugin-wmctrl/compare/v0.4.0.pre2...v0.4.0)
