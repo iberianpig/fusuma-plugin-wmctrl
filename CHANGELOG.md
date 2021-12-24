@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/1.1.0) (2021-12-24)
+
+[Full Changelog](https://github.com/iberianpig/fusuma-plugin-wmctrl/compare/v1.0.1...1.1.0)
+
+**Implemented enhancements:**
+
+- Add fusuma-wmctrl CLI [\#11](https://github.com/iberianpig/fusuma-plugin-wmctrl/pull/11) ([iberianpig](https://github.com/iberianpig))
+
+## [v1.0.1](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/v1.0.1) (2021-10-03)
+
+[Full Changelog](https://github.com/iberianpig/fusuma-plugin-wmctrl/compare/v1.0.0...v1.0.1)
+
 ## [v1.0.0](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/v1.0.0) (2021-06-08)
 
 [Full Changelog](https://github.com/iberianpig/fusuma-plugin-wmctrl/compare/v0.4.3...v1.0.0)
