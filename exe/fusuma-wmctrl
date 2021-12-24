@@ -1,0 +1,93 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'optparse'
+require_relative '../lib/fusuma/plugin/wmctrl/window.rb'
+require_relative '../lib/fusuma/plugin/wmctrl/workspace.rb'
+require_relative '../lib/fusuma/plugin/wmctrl/version.rb'
+
+option = {}
+opt = OptionParser.new
+
+opt.on('--wrap-navigation',
+       'circular navigation between workspaces') do |v|
+  option[:wrap_navigation] = v
+end
+
+opt.on('--matrix-col-size=3',
+       'For grid-style workspace, move up, down, left or right.'
+      ) do |v|
+  option[:matrix_col_size] = v.to_i
+end
+
+opt.on('--workspace=prev|next|up|down|left|right',
+       'move workspace') do |v|
+  option[:workspace] = v
+end
+
+opt.on('--window=prev|next|up|down|left|right',
+       'move window') do |v|
+  option[:window] = v
+end
+
+opt.on('--version', 'Show version') do |v|
+  option[:version] = v
+end
+
+opt.parse!(ARGV)
+
+if option[:workspace]
+  workspace = Fusuma::Plugin::Wmctrl::Workspace.new(
+    wrap_navigation: option[:wrap_navigation], matrix_col_size: option[:matrix_col_size]
+  )
+
+  command = case property = option[:workspace]
+  when 'prev', 'next'
+    workspace.move_command(direction: property)
+  when 'left', 'right', 'up', 'down'
+    workspace.move_command_for_matrix(direction: property)
+  else
+    raise "#{property} is invalid key"
+  end
+  `#{command}`
+
+  return
+end
+
+if option[:window]
+  workspace = Fusuma::Plugin::Wmctrl::Workspace.new(
+    wrap_navigation: option[:wrap_navigation], matrix_col_size: option[:matrix_col_size]
+  )
+  window = Fusuma::Plugin::Wmctrl::Window.new
+
+  command = case property = option[:window]
+            when 'prev', 'next'
+              workspace.move_window_command(direction: property)
+            when 'left', 'right', 'up', 'down'
+              workspace.move_window_command_for_matrix(direction: property)
+            when 'maximized'
+              window.maximized(method: 'toggle')
+            when 'close'
+              window.close
+            when 'fullscreen'
+              window.fullscreen(method: 'toggle')
+            else
+              raise "#{property} is invalid key"
+            end
+
+  `#{command}`
+
+  return
+end
+
+if option[:version]
+  puts Fusuma::Plugin::Wmctrl::VERSION
+  return
+end
+
+param = ARGV.first
+
+if param.nil?
+  warn 'fusuma-wmctrl require aruguments'
+  exit 1
+end
