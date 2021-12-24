@@ -13,8 +13,8 @@ module Fusuma
     module Executors
       RSpec.describe WmctrlExecutor do
         before do
-          @workspace = double(Workspace)
-          allow(Workspace)
+          @workspace = double(Wmctrl::Workspace)
+          allow(Wmctrl::Workspace)
             .to receive(:new)
             .and_return(@workspace)
 
@@ -317,7 +317,7 @@ module Fusuma
             end
 
             it 'should wrap-navigation mode' do
-              expect(Workspace).to receive(:new).with(
+              expect(Wmctrl::Workspace).to receive(:new).with(
                 wrap_navigation: true,
                 matrix_col_size: nil
               )

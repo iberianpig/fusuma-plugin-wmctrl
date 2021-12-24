@@ -23,11 +23,11 @@ module Fusuma
 
         def initialize
           super()
-          @workspace = Workspace.new(
+          @workspace = Wmctrl::Workspace.new(
             wrap_navigation: config_params(:'wrap-navigation'),
             matrix_col_size: config_params(:'matrix-col-size')
           )
-          @window = Window.new
+          @window = Wmctrl::Window.new
         end
 
         # execute wmctrl command

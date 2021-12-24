@@ -135,7 +135,7 @@ module Fusuma
             it 'raises InvalidOption' do
               expect do
                 @workspace.next_workspace_num_for_matrix(direction: 'prev')
-              end.to raise_error(Workspace::InvalidOption)
+              end.to raise_error(Wmctrl::Workspace::MissingMatrixOption)
             end
           end
 
@@ -227,7 +227,7 @@ module Fusuma
               @workspace = Workspace.new(matrix_col_size: nil)
               stub_workspace_values(current: 1, total: 3)
             end
-            it { expect { @workspace.matrix_size(3) }.to raise_error Workspace::InvalidOption }
+            it { expect { @workspace.matrix_size(3) }.to raise_error Workspace::MissingMatrixOption }
           end
         end
       end
