@@ -1,4 +1,4 @@
-# Fusuma::Plugin::Wmctrl [![Gem Version](https://badge.fury.io/rb/fusuma-plugin-wmctrl.svg)](https://badge.fury.io/rb/fusuma-plugin-wmctrl) [![Build Status](https://travis-ci.com/iberianpig/fusuma-plugin-wmctrl.svg?branch=master)](https://travis-ci.com/iberianpig/fusuma-plugin-wmctrl)
+# Fusuma::Plugin::Remap [![Gem Version](https://badge.fury.io/rb/fusuma-plugin-wmctrl.svg)](https://badge.fury.io/rb/fusuma-plugin-wmctrl) [![Build Status](https://github.com/iberianpig/fusuma-plugin-wmctrl/actions/workflows/main.yml/badge.svg)](https://github.com/iberianpig/fusuma-plugin-wmctrl/actions/workflows/main.yml)
 
 
 Window Manager plugin for [Fusuma](https://github.com/iberianpig/fusuma)
