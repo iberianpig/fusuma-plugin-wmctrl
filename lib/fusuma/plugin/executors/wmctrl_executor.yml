@@ -1,0 +1,5 @@
+plugin:
+  executors:
+    wmctrl_executor:
+      wrap-navigation: false
+      matrix-col-size:
