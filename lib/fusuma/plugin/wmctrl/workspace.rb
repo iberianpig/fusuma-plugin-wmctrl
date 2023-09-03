@@ -53,7 +53,7 @@ module Fusuma
                   matrix-col-size: 2
             ```
           ERRRORMESSAGE
-          raise MissingMatrixOption, 'You need to set matrix option to config.yml'
+          raise MissingMatrixOption, "You need to set matrix option to config.yml"
         end
 
         # @return [Integer]
@@ -65,7 +65,7 @@ module Fusuma
           x = current_workspace_num % col_size
           y = current_workspace_num / col_size
           case direction
-          when 'right'
+          when "right"
             if x < col_size - 1
               current_workspace_num + 1
             elsif @wrap_navigation
@@ -73,7 +73,7 @@ module Fusuma
             else
               current_workspace_num
             end
-          when 'left'
+          when "left"
             if x.positive?
               current_workspace_num - 1
             elsif @wrap_navigation
@@ -81,7 +81,7 @@ module Fusuma
             else
               current_workspace_num
             end
-          when 'down'
+          when "down"
             if y < row_size - 1
               current_workspace_num + col_size
             elsif @wrap_navigation
@@ -89,7 +89,7 @@ module Fusuma
             else
               current_workspace_num
             end
-          when 'up'
+          when "up"
             if y.positive?
               current_workspace_num - col_size
             elsif @wrap_navigation
@@ -104,13 +104,13 @@ module Fusuma
 
         def move_command(direction:)
           workspace_num = case direction
-                          when 'next'
-                            next_workspace_num(step: 1)
-                          when 'prev'
-                            next_workspace_num(step: -1)
-                          else
-                            raise "#{direction} is invalid key"
-                          end
+          when "next"
+            next_workspace_num(step: 1)
+          when "prev"
+            next_workspace_num(step: -1)
+          else
+            raise "#{direction} is invalid key"
+          end
           "wmctrl -s #{workspace_num}"
         end
 
@@ -121,13 +121,13 @@ module Fusuma
 
         def move_window_command(direction:)
           workspace_num = case direction
-                          when 'next'
-                            next_workspace_num(step: 1)
-                          when 'prev'
-                            next_workspace_num(step: -1)
-                          else
-                            raise "#{direction} is invalid key"
-                          end
+          when "next"
+            next_workspace_num(step: 1)
+          when "prev"
+            next_workspace_num(step: -1)
+          else
+            raise "#{direction} is invalid key"
+          end
           "wmctrl -r :ACTIVE: -t #{workspace_num} ; wmctrl -s #{workspace_num}"
         end
 
@@ -149,7 +149,7 @@ module Fusuma
           # (_NET_CURRENT_DESKTOP or _WIN_WORKSPACE property)`
           return [0, 1] if current_line.nil?
 
-          current_workspace_num = current_line.chars.first.to_i
+          current_workspace_num = current_line[0].to_i
           total_workspace_num = wmctrl_output.length
 
           [current_workspace_num, total_workspace_num]

@@ -11,7 +11,7 @@ module Fusuma
         end
 
         def close
-          'wmctrl -c :ACTIVE:'
+          "wmctrl -c :ACTIVE:"
         end
 
         # @param method [String] "toggle" or "add" or "remove"

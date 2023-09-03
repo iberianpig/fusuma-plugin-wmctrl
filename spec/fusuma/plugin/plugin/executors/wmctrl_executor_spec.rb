@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
-require 'fusuma/plugin/executors/executor'
-require 'fusuma/plugin/events/event'
-require 'fusuma/plugin/events/records/index_record'
+require "fusuma/plugin/executors/executor"
+require "fusuma/plugin/events/event"
+require "fusuma/plugin/events/records/index_record"
 
-require './lib/fusuma/plugin/executors/wmctrl_executor'
+require "./lib/fusuma/plugin/executors/wmctrl_executor"
 
 module Fusuma
   module Plugin
@@ -20,9 +20,9 @@ module Fusuma
 
           index = Config::Index.new([:dummy, 1, :direction])
           record = Events::Records::IndexRecord.new(index: index)
-          @event = Events::Event.new(tag: 'dummy_detector', record: record)
+          @event = Events::Event.new(tag: "dummy_detector", record: record)
           @executor = WmctrlExecutor.new
-          allow(@executor).to receive(:search_command).and_return 'dummy command'
+          allow(@executor).to receive(:search_command).and_return "dummy command"
         end
 
         around do |example|
@@ -38,11 +38,11 @@ module Fusuma
           Config.custom_path = nil
         end
 
-        describe '#execute' do
-          it 'detach' do
+        describe "#execute" do
+          it "detach" do
             pid = rand(20)
             allow(Process).to receive(:spawn).with(@executor.search_command(@event))
-                                             .and_return pid
+              .and_return pid
 
             expect(Process).to receive(:detach).with(pid)
 
@@ -50,20 +50,20 @@ module Fusuma
           end
         end
 
-        describe '#executable?' do
-          context 'when given valid event tagged as xxxx_detector' do
+        describe "#executable?" do
+          context "when given valid event tagged as xxxx_detector" do
             it { expect(@executor.executable?(@event)).to be_truthy }
           end
 
-          context 'when given INVALID event tagged as invalid_tag' do
+          context "when given INVALID event tagged as invalid_tag" do
             before do
-              @event.tag = 'invalid_tag'
+              @event.tag = "invalid_tag"
             end
             it { expect(@executor.executable?(@event)).to be_falsey }
           end
         end
 
-        describe '#search_command' do
+        describe "#search_command" do
           before do
             allow(@executor).to receive(:search_command).and_call_original
 
@@ -87,8 +87,8 @@ module Fusuma
               Config.custom_path = nil
             end
 
-            it 'should return wmctrl command' do
-              expect(@workspace).to receive(:move_command).with(direction: 'prev')
+            it "should return wmctrl command" do
+              expect(@workspace).to receive(:move_command).with(direction: "prev")
               @executor.search_command(@event)
             end
           end
@@ -107,8 +107,8 @@ module Fusuma
               Config.custom_path = nil
             end
 
-            it 'should return wmctrl command' do
-              expect(@workspace).to receive(:move_window_command).with(direction: 'prev')
+            it "should return wmctrl command" do
+              expect(@workspace).to receive(:move_window_command).with(direction: "prev")
               @executor.search_command(@event)
             end
           end
@@ -127,13 +127,13 @@ module Fusuma
               Config.custom_path = nil
             end
 
-            it 'should return wmctrl command' do
+            it "should return wmctrl command" do
               expect(@executor.search_command(@event))
                 .to match(/wmctrl -r :ACTIVE: -b toggle,fullscreen/)
             end
           end
 
-          context 'when window: [fullscreen: something]' do
+          context "when window: [fullscreen: something]" do
             context "when fullscreen: 'toggle'" do
               around do |example|
                 ConfigHelper.load_config_yml = <<~CONFIG
@@ -149,7 +149,7 @@ module Fusuma
                 Config.custom_path = nil
               end
 
-              it 'should return wmctrl command' do
+              it "should return wmctrl command" do
                 expect(@executor.search_command(@event))
                   .to match(/wmctrl -r :ACTIVE: -b toggle,fullscreen/)
               end
@@ -170,7 +170,7 @@ module Fusuma
                 Config.custom_path = nil
               end
 
-              it 'should return wmctrl command' do
+              it "should return wmctrl command" do
                 expect(@executor.search_command(@event))
                   .to match(/wmctrl -r :ACTIVE: -b add,fullscreen/)
               end
@@ -191,7 +191,7 @@ module Fusuma
                 Config.custom_path = nil
               end
 
-              it 'should return wmctrl command' do
+              it "should return wmctrl command" do
                 expect(@executor.search_command(@event))
                   .to match(/wmctrl -r :ACTIVE: -b remove,fullscreen/)
               end
@@ -212,13 +212,13 @@ module Fusuma
               Config.custom_path = nil
             end
 
-            it 'should return wmctrl command' do
+            it "should return wmctrl command" do
               expect(@executor.search_command(@event))
                 .to match(/wmctrl -r :ACTIVE: -b toggle,maximized/)
             end
           end
 
-          context 'when window: [maximized: something]' do
+          context "when window: [maximized: something]" do
             context "when maximized: 'toggle'" do
               around do |example|
                 ConfigHelper.load_config_yml = <<~CONFIG
@@ -234,7 +234,7 @@ module Fusuma
                 Config.custom_path = nil
               end
 
-              it 'should return wmctrl command' do
+              it "should return wmctrl command" do
                 expect(@executor.search_command(@event))
                   .to match(/wmctrl -r :ACTIVE: -b toggle,maximized/)
               end
@@ -255,7 +255,7 @@ module Fusuma
                 Config.custom_path = nil
               end
 
-              it 'should return wmctrl command' do
+              it "should return wmctrl command" do
                 expect(@executor.search_command(@event))
                   .to match(/wmctrl -r :ACTIVE: -b add,maximized/)
               end
@@ -276,7 +276,7 @@ module Fusuma
                 Config.custom_path = nil
               end
 
-              it 'should return wmctrl command' do
+              it "should return wmctrl command" do
                 expect(@executor.search_command(@event))
                   .to match(/wmctrl -r :ACTIVE: -b remove,maximized/)
               end
@@ -296,13 +296,13 @@ module Fusuma
               Config.custom_path = nil
             end
 
-            it 'should return wmctrl command' do
+            it "should return wmctrl command" do
               expect(@executor.search_command(@event))
                 .to match(/wmctrl -c :ACTIVE:/)
             end
           end
 
-          describe 'wrap_navigation: true' do
+          describe "wrap_navigation: true" do
             around do |example|
               ConfigHelper.load_config_yml = <<~CONFIG
                 plugin:
@@ -316,7 +316,7 @@ module Fusuma
               Config.custom_path = nil
             end
 
-            it 'should wrap-navigation mode' do
+            it "should wrap-navigation mode" do
               expect(Wmctrl::Workspace).to receive(:new).with(
                 wrap_navigation: true,
                 matrix_col_size: nil
@@ -325,7 +325,7 @@ module Fusuma
             end
           end
 
-          describe 'matrix-col-size' do
+          describe "matrix-col-size" do
             context "with matrix-col-size: '3', right" do
               around do |example|
                 ConfigHelper.load_config_yml = <<~CONFIG
@@ -344,9 +344,9 @@ module Fusuma
                 Config.custom_path = nil
               end
 
-              it 'should return wmctrl command with index of right(next) workspace' do
+              it "should return wmctrl command with index of right(next) workspace" do
                 expect(@workspace).to receive(:move_window_command_for_matrix)
-                  .with(direction: 'right')
+                  .with(direction: "right")
                 @executor.search_command(@event)
               end
             end

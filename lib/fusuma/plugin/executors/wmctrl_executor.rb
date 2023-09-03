@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../wmctrl/window'
-require_relative '../wmctrl/workspace'
+require_relative "../wmctrl/window"
+require_relative "../wmctrl/workspace"
 
 module Fusuma
   module Plugin
@@ -16,16 +16,16 @@ module Fusuma
 
         def config_param_types
           {
-            'wrap-navigation': [TrueClass, FalseClass],
-            'matrix-col-size': [Integer]
+            "wrap-navigation": [TrueClass, FalseClass],
+            "matrix-col-size": [Integer]
           }
         end
 
         def initialize
           super()
           @workspace = Wmctrl::Workspace.new(
-            wrap_navigation: config_params(:'wrap-navigation'),
-            matrix_col_size: config_params(:'matrix-col-size')
+            wrap_navigation: config_params(:"wrap-navigation"),
+            matrix_col_size: config_params(:"matrix-col-size")
           )
           @window = Wmctrl::Window.new
         end
@@ -45,7 +45,7 @@ module Fusuma
         # @param event [Event]
         # @return [TrueClass, FalseClass]
         def executable?(event)
-          event.tag.end_with?('_detector') &&
+          event.tag.end_with?("_detector") &&
             event.record.type == :index &&
             search_command(event)
         end
@@ -69,9 +69,9 @@ module Fusuma
           index = Config::Index.new([*event.record.index.keys, :workspace])
 
           case property = Config.search(index)
-          when 'prev', 'next'
+          when "prev", "next"
             @workspace.move_command(direction: property)
-          when 'left', 'right', 'up', 'down'
+          when "left", "right", "up", "down"
             @workspace.move_command_for_matrix(direction: property)
           when nil
             nil
@@ -87,15 +87,15 @@ module Fusuma
           index = Config::Index.new([*event.record.index.keys, :window])
 
           case property = Config.search(index)
-          when 'prev', 'next'
+          when "prev", "next"
             @workspace.move_window_command(direction: property)
-          when 'left', 'right', 'up', 'down'
+          when "left", "right", "up", "down"
             @workspace.move_window_command_for_matrix(direction: property)
-          when 'fullscreen'
-            @window.fullscreen(method: 'toggle')
-          when 'maximized'
-            @window.maximized(method: 'toggle')
-          when 'close'
+          when "fullscreen"
+            @window.fullscreen(method: "toggle")
+          when "maximized"
+            @window.maximized(method: "toggle")
+          when "close"
             @window.close
           when Hash
             if property[:fullscreen]

@@ -1,25 +1,9 @@
-inherit_from: .rubocop_todo.yml
+require:
+  - standard
+inherit_gem:
+  standard: config/base.yml
 
 AllCops:
-  TargetRubyVersion: '2.5'
+  TargetRubyVersion: "2.7"
   NewCops: enable
-
-Layout/LineLength:
-  Max: 100
-  Exclude:
-    - "*.gemspec"
-    - "**/*_spec.rb"
-
-Metrics/ModuleLength:
-  Exclude:
-    - "**/*_spec.rb"
-
-Metrics/BlockLength:
-  Exclude:
-    - "**/*_spec.rb"
-    - "fusuma-plugin-*.gemspec"
-
-Metrics/LineLength:
-  Max: 100
-  Exclude:
-    - "fusuma-plugin-*.gemspec"
+  SuggestExtensions: false
