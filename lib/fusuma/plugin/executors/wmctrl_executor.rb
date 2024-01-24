@@ -8,6 +8,8 @@ module Fusuma
     module Executors
       # Control Window or Workspaces by executing wctrl
       class WmctrlExecutor < Executor
+        class InvalidOption < StandardError; end
+
         # executor properties on config.yml
         # @return [Array<Symbol>]
         def execute_keys
@@ -55,7 +57,7 @@ module Fusuma
         # @return [NilClass]
         def search_command(event)
           search_workspace_command(event) || search_window_command(event)
-        rescue Workspace::InvalidOption => e
+        rescue InvalidOption => e
           MultiLogger.error(e.message)
           exit 1
         end
