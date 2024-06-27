@@ -31,6 +31,7 @@ module Fusuma
           next_workspace_num
         end
 
+        # @raise [MissingMatrixOption]
         # @return [Array<Integer>]
         def matrix_size(total_workspace_num)
           must_have_matrix_option!
@@ -39,6 +40,7 @@ module Fusuma
           [row_size.to_i, col_size.to_i]
         end
 
+        # @raise [MissingMatrixOption]
         def must_have_matrix_option!
           return if @matrix_col_size
 
@@ -57,7 +59,8 @@ module Fusuma
         end
 
         # @return [Integer]
-        # @raise RuntimeError
+        # @raise [RuntimeError]
+        # @raise [MissingMatrixOption]
         def next_workspace_num_for_matrix(direction:)
           must_have_matrix_option!
           current_workspace_num, total_workspace_num = workspace_values
@@ -131,6 +134,7 @@ module Fusuma
           "wmctrl -r :ACTIVE: -t #{workspace_num} ; wmctrl -s #{workspace_num}"
         end
 
+        # @raise [MissingMatrixOption]
         def move_window_command_for_matrix(direction:)
           workspace_num = next_workspace_num_for_matrix(direction: direction)
           "wmctrl -r :ACTIVE: -t #{workspace_num} ; wmctrl -s #{workspace_num}"

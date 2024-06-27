@@ -67,6 +67,7 @@ module Fusuma
         # @param event [Event]
         # @return [String]
         # @return [NilClass]
+        # @raise [InvalidOption]
         def search_workspace_command(event)
           index = Config::Index.new([*event.record.index.keys, :workspace])
 
@@ -80,11 +81,14 @@ module Fusuma
           else
             raise "#{property} is invalid key"
           end
+        rescue Workspace::MissingMatrixOption => e
+          raise  InvalidOption, e.message
         end
 
         # @param event [Event]
         # @return [String]
         # @return [NilClass]
+        # @raise [InvalidOption]
         def search_window_command(event)
           index = Config::Index.new([*event.record.index.keys, :window])
 
@@ -108,8 +112,10 @@ module Fusuma
           when nil
             nil
           else
-            raise "#{property} is invalid key"
+            raise InvalidOption, "#{property} is invalid key"
           end
+        rescue Workspace::MissingMatrixOption => e
+          raise  InvalidOption, e.message
         end
       end
     end
