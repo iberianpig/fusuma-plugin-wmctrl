@@ -39,7 +39,7 @@ module Fusuma
         end
 
         describe "#execute" do
-          it "detach" do
+          it "detaches the process" do
             pid = rand(20)
             allow(Process).to receive(:spawn).with(@executor.search_command(@event))
               .and_return pid
@@ -55,7 +55,7 @@ module Fusuma
             it { expect(@executor.executable?(@event)).to be_truthy }
           end
 
-          context "when given INVALID event tagged as invalid_tag" do
+          context "when given invalid event tagged as invalid_tag" do
             before do
               @event.tag = "invalid_tag"
             end
@@ -73,6 +73,7 @@ module Fusuma
               .to receive(:workspace_values)
               .and_return([@current_workspace, @total_workspaces])
           end
+
           context "when workspace: 'prev'" do
             around do |example|
               ConfigHelper.load_config_yml = <<~CONFIG
@@ -282,6 +283,7 @@ module Fusuma
               end
             end
           end
+
           context "when window: 'close'" do
             around do |example|
               ConfigHelper.load_config_yml = <<~CONFIG
