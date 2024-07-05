@@ -9,6 +9,7 @@ module Fusuma
       # Control Window or Workspaces by executing wctrl
       class WmctrlExecutor < Executor
         class InvalidOption < StandardError; end
+        class NotInstalledError < StandardError; end
 
         # executor properties on config.yml
         # @return [Array<Symbol>]
@@ -56,13 +57,37 @@ module Fusuma
         # @return [String]
         # @return [NilClass]
         def search_command(event)
+          must_install!("wmctrl")
+
           search_workspace_command(event) || search_window_command(event)
-        rescue InvalidOption => e
+        rescue InvalidOption, NotInstalledError => e
           MultiLogger.error(e.message)
           exit 1
         end
 
         private
+
+        def must_install!(cmd)
+          return if @_installed
+
+          if which(cmd)
+            @_installed = true
+          else
+            raise NotInstalledError, "`#{cmd}` is not executable. Please install `#{cmd}`"
+          end
+        end
+
+        # which('ruby') #=> /usr/bin/ruby
+        def which(cmd)
+          exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
+          ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
+            exts.each do |ext|
+              exe = File.join(path, "#{cmd}#{ext}")
+              return exe if File.executable?(exe) && !File.directory?(exe)
+            end
+          end
+          nil
+        end
 
         # @param event [Event]
         # @return [String]
@@ -79,7 +104,7 @@ module Fusuma
           when nil
             nil
           else
-            raise "#{property} is invalid key"
+            raise InvalidOption, "#{property} is invalid key"
           end
         rescue Workspace::MissingMatrixOption => e
           raise  InvalidOption, e.message
