@@ -22,6 +22,7 @@ module Fusuma
           record = Events::Records::IndexRecord.new(index: index)
           @event = Events::Event.new(tag: "dummy_detector", record: record)
           @executor = WmctrlExecutor.new
+          allow(@executor).to receive(:must_install!).with("wmctrl").and_return true
           allow(@executor).to receive(:search_command).and_return "dummy command"
         end
 
@@ -72,6 +73,14 @@ module Fusuma
             allow(@workspace)
               .to receive(:workspace_values)
               .and_return([@current_workspace, @total_workspaces])
+          end
+
+
+          context "when wmctrl command is not installed" do
+            before do
+              allow(@executor).to receive(:must_install!).with("wmctrl").and_raise WmctrlExecutor::NotInstalledError
+            end
+            it { expect(@executor.executable?(@event)).to be_falsey }
           end
 
           context "when workspace: 'prev'" do

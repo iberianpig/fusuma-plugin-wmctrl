@@ -67,6 +67,8 @@ module Fusuma
 
         private
 
+        # @return [NilClass] when wmctrl is installed
+        # @raise [NotInstalledError] when wmctrl is not installed
         def must_install!(cmd)
           return if @_installed
 
