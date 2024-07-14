@@ -1,5 +1,18 @@
 # Changelog
 
+## [v1.4.0](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/v1.4.0) (2024-07-14)
+
+[Full Changelog](https://github.com/iberianpig/fusuma-plugin-wmctrl/compare/v1.3.1...v1.4.0)
+
+**Implemented enhancements:**
+
+- Check if wmctrl is installed before execution [\#4](https://github.com/iberianpig/fusuma-plugin-wmctrl/issues/4)
+
+**Fixed bugs:**
+
+- NameError in `WmctrlExecutor::executable?` [\#13](https://github.com/iberianpig/fusuma-plugin-wmctrl/issues/13)
+- fix: correct error type in WmctrlExecutor::executable? [\#14](https://github.com/iberianpig/fusuma-plugin-wmctrl/pull/14) ([pluiedev](https://github.com/pluiedev))
+
 ## [v1.3.1](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/v1.3.1) (2023-09-03)
 
 [Full Changelog](https://github.com/iberianpig/fusuma-plugin-wmctrl/compare/v1.3.0...v1.3.1)
@@ -66,7 +79,7 @@
 
 **Merged pull requests:**
 
-- Add wrap-nagivation option [\#7](https://github.com/iberianpig/fusuma-plugin-wmctrl/pull/7) ([jkosecki](https://github.com/jkosecki))
+- Add wrap-navigation option [\#7](https://github.com/iberianpig/fusuma-plugin-wmctrl/pull/7) ([jkosecki](https://github.com/jkosecki))
 - Add arch instructions [\#6](https://github.com/iberianpig/fusuma-plugin-wmctrl/pull/6) ([HritwikSinghal](https://github.com/HritwikSinghal))
 
 ## [v0.4.0.pre](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/v0.4.0.pre) (2020-11-09)
