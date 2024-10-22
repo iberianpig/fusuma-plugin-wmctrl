@@ -23,7 +23,7 @@ module Fusuma
                 .to match(/wmctrl -s 2/)
             end
             it "calls next_workspace_num" do
-              expect(@workspace).to receive(:next_workspace_num).with(step: 1)
+              expect(@workspace).to receive(:next_workspace_num).with(step: 1).and_return(2)
               @workspace.move_command(direction: @direction)
             end
           end

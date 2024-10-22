@@ -114,6 +114,9 @@ module Fusuma
           else
             raise "#{direction} is invalid key"
           end
+
+          workspace_num = 0 if workspace_num.negative?
+
           "wmctrl -s #{workspace_num}"
         end
 
@@ -131,6 +134,9 @@ module Fusuma
           else
             raise "#{direction} is invalid key"
           end
+
+          workspace_num = 0 if workspace_num.negative?
+
           "wmctrl -r :ACTIVE: -t #{workspace_num} ; wmctrl -s #{workspace_num}"
         end
 
