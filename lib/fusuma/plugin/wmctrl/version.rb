@@ -3,7 +3,7 @@
 module Fusuma
   module Plugin
     module Wmctrl
-      VERSION = "1.4.0"
+      VERSION = "1.4.1"
     end
   end
 end
