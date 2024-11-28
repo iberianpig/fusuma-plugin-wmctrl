@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.4.2](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/v1.4.2) (2024-11-28)
+
+[Full Changelog](https://github.com/iberianpig/fusuma-plugin-wmctrl/compare/v1.4.1...v1.4.2)
+
+**Fixed bugs:**
+
+- fix: using re to match current workspace num [\#15](https://github.com/iberianpig/fusuma-plugin-wmctrl/pull/15) ([JimMoen](https://github.com/JimMoen))
+
+## [v1.4.1](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/v1.4.1) (2024-10-22)
+
+[Full Changelog](https://github.com/iberianpig/fusuma-plugin-wmctrl/compare/v1.4.0...v1.4.1)
+
 ## [v1.4.0](https://github.com/iberianpig/fusuma-plugin-wmctrl/tree/v1.4.0) (2024-07-14)
 
 [Full Changelog](https://github.com/iberianpig/fusuma-plugin-wmctrl/compare/v1.3.1...v1.4.0)
