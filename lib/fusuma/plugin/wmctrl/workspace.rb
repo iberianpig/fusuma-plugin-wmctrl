@@ -159,7 +159,7 @@ module Fusuma
           # (_NET_CURRENT_DESKTOP or _WIN_WORKSPACE property)`
           return [0, 1] if current_line.nil?
 
-          current_workspace_num = current_line[0].to_i
+          current_workspace_num = current_line[/^\d+(?=\s+\*)/].to_i
           total_workspace_num = wmctrl_output.length
 
           [current_workspace_num, total_workspace_num]
